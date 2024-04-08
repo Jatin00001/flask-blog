@@ -39,7 +39,7 @@ class User:
   def __init__(self, username, password):
     self.username = username
     self.password = bcrypt.generate_password_hash(password).decode('utf-8')
-    print(self.password)
+    # print(self.password)
 
 
 # Dummy users for demonstration
