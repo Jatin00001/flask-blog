@@ -1,0 +1,25 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual Environment
+venv/
+ENV/
+
+# Flask
+instance/
+.pytest_cache/
+coverage/
+
+# Tailwind CSS
+node_modules/
+npm-debug.log
+
+# IDE
+.idea/
+.vscode/
+
+# Miscellaneous
+*.log
+*.swp
+.DS_Store
