@@ -405,28 +405,23 @@
 <section class="text-gray-600 body-font overflow-hidden">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -m-12">
+      {% for blogs in blogs %}
       <div class="p-12 md:w-1/2 flex flex-col items-start">
         <span
           class="inline-block py-1 px-2 rounded bg-red-50 text-red-500 text-xs font-medium tracking-widest"
-          >CATEGORY</span
+          >{{blogs['title']}}</span
         >
         <h2
           class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4"
         >
-          Roof party normcore before they sold out, cornhole vape
+          {{blogs['subhead']}}
         </h2>
-        <p class="leading-relaxed mb-8">
-          Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal
-          portland. VHS man braid palo santo hoodie brunch trust fund. Bitters
-          hashtag waistcoat fashion axe chia unicorn. Plaid fixie chambray 90's,
-          slow-carb etsy tumeric. Cray pug you probably haven't heard of them
-          hexagon kickstarter craft beer pork chic.
-        </p>
+        <p class="leading-relaxed mb-8">{{blogs['content']}}</p>
         <div
           class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
         >
           <a class="text-red-500 inline-flex items-center"
-            >Learn More
+            >Read More
             <svg
               class="w-4 h-4 ml-2"
               viewBox="0 0 24 24"
@@ -482,15 +477,16 @@
           />
           <span class="flex-grow flex flex-col pl-4">
             <span class="title-font font-medium text-gray-900"
-              >Holden Caulfield</span
+              >{{blogs['postby']}}</span
             >
             <span class="text-gray-400 text-xs tracking-widest mt-0.5"
-              >UI DEVELOPER</span
+              >{{blogs['created_at']}}</span
             >
           </span>
         </a>
       </div>
-      <div class="p-12 md:w-1/2 flex flex-col items-start">
+      {% endfor %}
+      <!-- <div class="p-12 md:w-1/2 flex flex-col items-start">
         <span
           class="inline-block py-1 px-2 rounded bg-red-50 text-red-500 text-xs font-medium tracking-widest"
           >CATEGORY</span
@@ -571,7 +567,7 @@
             >
           </span>
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>
@@ -588,12 +584,14 @@
       <h1
         class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
       >
-        Master Cleanse Reliac Heirloom
+        Contact Me
       </h1>
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-        Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-        gentrify, subway tile poke farm-to-table. Franzen you probably haven't
-        heard of them man bun deep.
+        Thank you for taking the time to explore my portfolio. If you have any
+        inquiries, opportunities, or collaborations you'd like to discuss,
+        please don't hesitate to reach out to me. I'm always open to connecting
+        with fellow professionals, recruiters, potential clients, and anyone
+        interested in my work.
       </p>
     </div>
     <div
@@ -611,19 +609,22 @@
         />
       </div>
       <div class="relative flex-grow w-full">
-        <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+        <label for="message" class="leading-7 text-sm text-gray-600"
+          >message</label
+        >
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="message"
+          name="message"
           class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
       </div>
-      <button
+      <a
+        href="#"
+        onclick="sendMail()"
         class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
+        >Send</a
       >
-        Button
-      </button>
     </div>
   </div>
 </section>

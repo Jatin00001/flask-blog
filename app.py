@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
-from logindatabase import loadformdbskills
+from logindatabase import loadformdbskills, load_form_blogs_db
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -53,7 +53,8 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 @app.route('/')
 def index():
   skill = loadformdbskills()
-  return render_template('landingpage.html', skills=skill)
+  blogs = load_form_blogs_db()
+  return render_template('landingpage.html', skills=skill, blogs=blogs)
 
 
 # @app.route('/login')

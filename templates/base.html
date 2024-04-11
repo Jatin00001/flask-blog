@@ -363,6 +363,19 @@
           mobileMenu.classList.toggle("hidden");
         });
       });
+
+
+
+
+      // -------------------------------------------------------belongs to mail on landing page ------
+      function sendMail() {
+        var fullName = document.getElementById("full-name").value;
+        var message = document.getElementById("message").value;
+        var subject = "Inquiry from " + fullName;
+        var body = "Name: " + fullName + "\nMessage: " + message;
+        var mailtoLink = "mailto:datajatin90@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        window.location.href = mailtoLink;
+      }
     </script>
   </body>
 </html>

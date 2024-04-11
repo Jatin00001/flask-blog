@@ -23,3 +23,19 @@ def loadformdbskills():
 
   except Exception as e:
     print(e)
+
+
+# ------blogs--
+def load_form_blogs_db():
+  try:
+    with engine.connect() as conn:
+      # print("Connected to the database -- >", conn)
+      result = conn.execute(text("SELECT * FROM blogs"))
+      blogs = []
+      for row in result.all():
+        blogs.append(row._asdict())  #convert data into dictionary
+      # print(skills)
+      return blogs
+      # print(type(jobs))
+  except Exception as e:
+    print(e)
