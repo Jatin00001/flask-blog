@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
+from logindatabase import engine
+from sqlalchemy import text
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -19,41 +21,57 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 #     }
 # }
 
-Skills = [{
-    'id': 1,
-    'sname': 'Python',
-    'sdesc': 9
-}, {
-    'id': 2,
-    'sname': 'C++',
-    'sdesc': 9
-}, {
-    'id': 3,
-    'sname': 'Java',
-    'sdesc': 9
-}]
+# Skills = [{
+#     'id': 1,
+#     'sname': 'Python',
+#     'sdesc': 9
+# }, {
+#     'id': 2,
+#     'sname': 'C++',
+#     'sdesc': 9
+# }, {
+#     'id': 3,
+#     'sname': 'Java',
+#     'sdesc': 9
+# }]
 
 
-class User:
+def loadformdb():
+  try:
+    with engine.connect() as conn:
+      # print("Connected to the database -- >", conn)
+      result = conn.execute(text("SELECT * FROM skills"))
+      skills = []
+      for row in result.all():
+        skills.append(row._asdict())  #convert data into dictionary
+      print(skills)
+      return skills
+      # print(type(jobs))
 
-  def __init__(self, username, password):
-    self.username = username
-    self.password = bcrypt.generate_password_hash(password).decode('utf-8')
-    # print(self.password)
+  except Exception as e:
+    print(e)
 
 
-# Dummy users for demonstration
-user1 = User('jatin', 'jatin9920')
-user2 = User('jatin2', '123456789')
-user3 = User('Admin', 'admin123456')
+# class User:
 
-# Store user objects in a dictionary for easy access
-users = {user.username: user for user in [user1, user2, user3]}
+#   def __init__(self, username, password):
+#     self.username = username
+#     self.password = bcrypt.generate_password_hash(password).decode('utf-8')
+#     # print(self.password)
+
+# # Dummy users for demonstration
+# user1 = User('jatin', 'jatin9920')
+# user2 = User('jatin2', '123456789')
+# user3 = User('Admin', 'admin123456')
+
+# # Store user objects in a dictionary for easy access
+# users = {user.username: user for user in [user1, user2, user3]}
 
 
 @app.route('/')
 def index():
-  return render_template('landingpage.html', skils=Skills)
+  skill = loadformdb()
+  return render_template('landingpage.html', skills=skill)
 
 
 # @app.route('/login')
