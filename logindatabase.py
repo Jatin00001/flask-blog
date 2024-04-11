@@ -8,12 +8,13 @@ engine = create_engine(db_connection_string)
 try:
   with engine.connect() as conn:
     # print("Connected to the database -- >", conn)
-    result = conn.execute(text("SELECT username, password FROM userdatalogin"))
-    for row in result:
-      print(f"username: {row.username}  passoword: {row.password}")
+    result = conn.execute(text("SELECT * FROM userdatalogin"))
+    # for row in result:
+    result_dicts = []
+    for row in result.all():
+      result_dicts.append(row._asdict())   #convert data into dictionary
 
-
-
+    print(type(result_dicts))
 # -------------------------------------------------------------------------------------------------------------------------------why we convert into dict -------------------------------------/
     # for row in result:
     #   print(row)
@@ -32,4 +33,4 @@ try:
     # print("First pos data class : " , type(First_postion)) #<class 'sqlalchemy.engine.cursor.CursorResult'>'method' object is not subscriptable
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 except Exception as e:
-  print(e)
+  print(e) 
