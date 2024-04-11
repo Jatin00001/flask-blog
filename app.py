@@ -2,8 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
-from logindatabase import engine
-from sqlalchemy import text
+from logindatabase import loadformdbskills
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -35,23 +34,6 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 #     'sdesc': 9
 # }]
 
-
-def loadformdb():
-  try:
-    with engine.connect() as conn:
-      # print("Connected to the database -- >", conn)
-      result = conn.execute(text("SELECT * FROM skills"))
-      skills = []
-      for row in result.all():
-        skills.append(row._asdict())  #convert data into dictionary
-      print(skills)
-      return skills
-      # print(type(jobs))
-
-  except Exception as e:
-    print(e)
-
-
 # class User:
 
 #   def __init__(self, username, password):
@@ -70,7 +52,7 @@ def loadformdb():
 
 @app.route('/')
 def index():
-  skill = loadformdb()
+  skill = loadformdbskills()
   return render_template('landingpage.html', skills=skill)
 
 
@@ -120,15 +102,11 @@ def logout():
 #     return render_template('register.html')
 
 
-@app.route('/books')
-def books():
-  return render_template('/dashboardhtml/dashboardbase.html')
-
-
 @app.route('/api/skills')
 def skills():
-  print(type(Skills))
-  return jsonify({"skills": Skills})
+  skills = loadformdbskills()
+  print(type(skills))
+  return jsonify({"skills": skills})
 
 
 if __name__ == '__main__':
