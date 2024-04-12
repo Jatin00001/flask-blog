@@ -25,7 +25,23 @@ def loadformdbskills():
     print(e)
 
 
-# ------blogs--
+def load_form_db_skills(id):
+  try:
+    with engine.connect() as conn:
+      # print("Connected to the database -- >", conn)
+      result = conn.execute(text("SELECT * FROM skills WHERE id = :val"),
+                            {"val": id})
+      row = result.first()
+      if row:
+        return row._asdict()  # Convert row to dictionary
+      else:
+        return None
+  except Exception as e:
+    print("An error occurred:", e)
+    return None
+
+
+# ------blogs--------------------------------------------------------------------------
 def load_form_blogs_db():
   try:
     with engine.connect() as conn:

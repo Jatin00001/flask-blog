@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
-from logindatabase import loadformdbskills, load_form_blogs_db
+from logindatabase import loadformdbskills, load_form_blogs_db, load_form_db_skills
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -108,6 +108,16 @@ def skills():
   skills = loadformdbskills()
   print(type(skills))
   return jsonify({"skills": skills})
+
+
+@app.route('/api/<id>')
+def get_skill(id):
+  print(id)
+  skill = load_form_db_skills(id)
+  if skill is not None:
+    return jsonify({"skill": skill})
+  else:
+    return jsonify({"error": "Skill not found"}), 404
 
 
 if __name__ == '__main__':
