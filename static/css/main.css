@@ -906,6 +906,10 @@ video {
   height: 2rem;
 }
 
+.h-72 {
+  height: 18rem;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1720,6 +1724,11 @@ video {
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .antialiased {

@@ -65,7 +65,10 @@ def get_blog(id):
   else:
     return jsonify({"error": "Blog not found"}), 404
 
-
+@app.route('/all_blogs')
+def get_all_blogs():
+  blogs = load_form_blogs_db()
+  return render_template('all_blogs.html', blogs=blogs)
 
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])

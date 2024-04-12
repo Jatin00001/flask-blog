@@ -1,0 +1,120 @@
+{% extends 'base.html' %} {% block title %}New{% endblock %} {% block blogs %}
+{% for blog in blogs %}
+<div class="container px-5 pt-5 mx-auto">
+  <div class="mt-8 lg:flex lg:gap-x-28 xl:gap-x-32">
+    <div class="lg:w-3/5">
+      <div class="space-y-12">
+        <div>
+          <a href="#">
+            <img
+              class="object-cover w-full h-72 mb-6 duration-200 rounded-lg shadow-md hover:scale-105 sm:h-80 2xl:h-96"
+              src="https://tailwindcomponents.com/storage/10286/temp80526.png"
+              alt="30 Best Free Fonts for Web Designers Image"
+            />
+          </a>
+          <a
+            href="#"
+            class="inline-block text-xl font-bold text-gray-800 capitalize dark:text-gray-200 sm:text-2xl hover:underline hover:text-blue-500"
+            >30 Best Free Fonts for Web Designers</a
+          >
+          <p class="mt-4 text-gray-500 dark:text-gray-400">
+            The article presents a handpicked selection of free fonts that
+            encompass a diverse array of styles, moods, and personalities. Check
+            them out!
+          </p>
+        </div>
+      </div>
+      <div class="my-8">
+        <ul class="flex justify-center mt-12 space-x-3">
+          <li class="hidden"></li>
+          <li>
+            <a
+              title="Next »"
+              class="flex items-center px-5 py-2.5 hover:bg-gray-700 space-x-3 text-sm font-medium text-white transition-colors duration-300 transform bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-md focus:outline-none"
+              href="{{url_for('get_blog', id=blog['id'])}}"
+              rel="next"
+              >Read More »
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="hidden lg:w-1/4 lg:block">
+      <!-- <div>
+                <h3 class="font-medium text-gray-500 dark:text-gray-400">Categories</h3>
+                <div class="flex flex-col mt-2 space-y-1">
+                    <a href="/blog" class="font-medium text-gray-800 capitalize dark:text-white hover:underline">All Articles</a>
+                    <a href="/blog/resources" class="font-medium text-gray-800 capitalize dark:text-white hover:underline">Resources</a>
+                    <a href="/blog/tailwind-css" class="font-medium text-gray-800 capitalize dark:text-white hover:underline">Tailwind CSS</a>
+                    <a href="/blog/tutorial" class="font-medium text-gray-800 capitalize dark:text-white hover:underline">Tutorial</a>
+                </div>
+            </div> -->
+      <!-- <div class="mt-12">
+                <h3 class="font-medium text-gray-500 dark:text-gray-400">Top Articles</h3>
+                <div class="flex flex-col mt-2 space-y-3">
+                    <a href="/blog/resources/9-simple-404-page-examples-to-use-now-into-your-project" class="font-medium text-gray-800 capitalize truncate dark:text-white hover:underline">9 Simple 404 Page Examples to use now into your project</a>
+                    <a href="/blog/tailwind-css/9-beautiful-hero-sections-for-your-tailwind-css-project" class="font-medium text-gray-800 capitalize truncate dark:text-white hover:underline">9 Beautiful Hero Sections for your Tailwind CSS Project</a>
+                    <a href="/blog/free-tailwind-css-navbars" class="font-medium text-gray-800 capitalize truncate dark:text-white hover:underline">Free Tailwind CSS Navbars</a>
+                    <a href="/blog/how-to-install-tailwindcss-in-vite" class="font-medium text-gray-800 capitalize truncate dark:text-white hover:underline">How to Install Tailwindcss In Vite</a>
+                    <a href="/blog/resources/7-free-tailwind-css-footer-examples" class="font-medium text-gray-800 capitalize truncate dark:text-white hover:underline">7 Free Tailwind CSS Footer Examples </a>
+                </div>
+            </div> -->
+      <div class="mt-8 duration-200 rounded-lg shadow-md hover:scale-105">
+        <div
+          id="native-card-js"
+          class="row-start-2 native-js md:col-start-2 md:col-end-3 lg:col-start-3 lg:col-end-4"
+        >
+          <div class="hide-with-banner">
+            <div class="relative overflow-hidden rounded-lg">
+              <div class="relative hide-with-banner">
+                <a
+                  href="#"
+                  target="_blank"
+                  class="flex flex-col w-full h-full py-5"
+                >
+                  <div class="z-10 flex-col items-start justify-center px-6">
+                    <div
+                      class="absolute bg-blue-600 w-full h-full top-0 left-0 rounded-lg opacity-50 z-9"
+                    ></div>
+                    <div class="z-10 relative">
+                      <img src="/images/ap/react-html.png" class="w-20 mb-4" />
+                      <p class="text-xs text-white">React Components Library</p>
+                      <p class="mb-5 font-sans text-2xl font-bold text-white">
+                        Material Tailwind
+                      </p>
+                      <div class="mb-3">
+                        <span
+                          class="h-8 px-4 py-3 font-sans text-xs font-bold text-white bg-blue-500 rounded-lg shadow-md"
+                          >Get Started</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <img
+                    src="/images/ap/tc-material-tailwind-bg.jpg"
+                    class="absolute bottom-0 left-0 object-cover w-full h-full overflow-hidden rounded-md"
+                  />
+                </a>
+              </div>
+            </div>
+            <div class="mt-3">
+              <div class="leading-snug w-72 lg:w-full">
+                <a target="_blank" href="#">
+                  <h4
+                    class="font-bold text-gray-800 truncate whitespace-nowrap hover:text-primary dark:text-gray-200"
+                  >
+                    Material Tailwind
+                  </h4>
+                </a>
+                <p class="text-sm text-gray-600 truncate dark:text-gray-400">
+                  React components library
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock %}
