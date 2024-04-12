@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
-from logindatabase import loadformdbskills, load_form_blogs_db, load_form_db_skills
+from logindatabase import loadformdbskills, load_form_blogs_db, load_form_db_skills ,load_form_blogs_db_fm_id
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -56,10 +56,15 @@ def index():
   blogs = load_form_blogs_db()
   return render_template('landingpage.html', skills=skill, blogs=blogs)
 
+@app.route('/blogs/<id>')
+def get_blog(id):
+  blog = load_form_blogs_db_fm_id(id)
+  if blog is not None:
+    # keys_list = list(blog.keys())
+    return render_template('blogs.html', blog=blog)
+  else:
+    return jsonify({"error": "Blog not found"}), 404
 
-# @app.route('/login')
-# def login():
-#     return render_template('login.html')
 
 
 # Route for login page
@@ -103,6 +108,13 @@ def logout():
 #     return render_template('register.html')
 
 
+
+
+
+
+
+
+# -------AFTER THIS SECTION ALL API WITH RAW DATA ------------------------------------------------------------------------
 @app.route('/api/skills')
 def skills():
   skills = loadformdbskills()
@@ -112,13 +124,22 @@ def skills():
 
 @app.route('/api/<id>')
 def get_skill(id):
-  print(id)
   skill = load_form_db_skills(id)
   if skill is not None:
     return jsonify({"skill": skill})
   else:
     return jsonify({"error": "Skill not found"}), 404
 
+
+@app.route('/api/blogs/<id>')
+def get_blog_api(id):
+  blog = load_form_blogs_db_fm_id(id)
+  if blog is not None:
+    return jsonify({"blog": blog})
+  else:
+    return jsonify({"error": "Blog not found"}), 404
+  
+  
 
 if __name__ == '__main__':
   app.run(debug=True, host="0.0.0.0")

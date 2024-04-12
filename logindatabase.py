@@ -32,8 +32,8 @@ def load_form_db_skills(id):
       result = conn.execute(text("SELECT * FROM skills WHERE id = :val"),
                             {"val": id})
       row = result.first()
-      if row:
-        return row._asdict()  # Convert row to dictionary
+      if row:       # len(rows) gives a len of row 
+        return row._asdict()  # Convert row to dictionary using ._asdict()
       else:
         return None
   except Exception as e:
@@ -55,3 +55,19 @@ def load_form_blogs_db():
       # print(type(jobs))
   except Exception as e:
     print(e)
+
+
+# --------------------------from id ---------------------
+def load_form_blogs_db_fm_id(id):
+  try:
+    with engine.connect() as conn:
+      # print("Connected to the database -- >", conn)
+      result = conn.execute(text("SELECT * FROM blogs WHERE id = :val"),
+                            {"val": id})
+      row = result.first()
+      if row:       # len(rows) gives a len of row 
+        return row._asdict()  # Convert row to dictionary using ._asdict()
+      else:
+        return None
+  except Exception as e:
+    print("An error occurred:", e)
