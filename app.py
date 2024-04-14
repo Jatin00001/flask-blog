@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_blogs_db, load_form_db_skills ,load_form_blogs_db_fm_id
-from login import login_check
+from login import login_check,register_new_user
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -34,34 +34,51 @@ def get_all_blogs():
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-  if 'username' in session:
-    current_user = session['username']
-    return render_template('dashboard.html', username=current_user)
+  if 'email' in session:
+    current_user = session['email']
+    return render_template('dashboard.html', email=current_user)
   if request.method == 'POST':
-    username = request.form['email']
+    email = request.form['email']
     password = request.form['password']
-    if login_check(username,password):
-      session['username'] = username
+    if login_check(email,password):
+      session['email'] = email
       return redirect(url_for('dashboard'))
     else:
       return render_template('login.html',
-                             message='Invalid username or password')
+                             message='Invalid email or password')
   return render_template('login.html')
 
 
 @app.route('/dashboard')
 def dashboard():
-  if 'username' in session:
-    current_user = session['username']
-    return render_template('dashboard.html', username=current_user)
+  if 'email' in session:
+    current_user = session['email']
+    return render_template('dashboard.html', email=current_user)
   return render_template('login.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+  if 'email' in session:
+    current_user = session['email']
+    return render_template('dashboard.html', email=current_user)
+  
+  if request.method == 'POST':
+    username = request.form['username']
+    password = request.form['password']
+    email = request.form['email']
+    if register_new_user(username, password, email):
+      return redirect(url_for('login'))
+    else:
+      return render_template('register.html',
+                             message='Registration failed. Please try again or,already have an acount' )
+                             
+  return render_template('register.html')
 
 # Route for logout
 @app.route('/logout')
 def logout():
-  if 'username' in session:
-    session.pop('username', None)
+  if 'email' in session:
+    session.pop('email', None)
     return render_template('login.html')
   return redirect(url_for('login'))
 

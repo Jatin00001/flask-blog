@@ -43,7 +43,7 @@ def register_new_user(username, password, email):
 
       if email_count > 0:
         print("Error: Email already registered. Try logging in.")
-        return
+        return False
 
       # Hash the password
       hashed_password = new_user.password_hash
@@ -63,17 +63,12 @@ def register_new_user(username, password, email):
       print(
           "User registered successfully and data inserted into MySQL Workbench!"
       )
+      return True
   except Exception as e:
     print("Error registering user:", e)
 
 
-# Example usage:
-# register_new_user("rahul", "123456789", "rahul@gmail.com")
-
-
-# Example usage:
-# register_new_user()
-# --------------------------------------------------------------
+# -----------------------------------
 def login_check(email, password):
   try:
     with engine.connect() as conn:
@@ -98,7 +93,3 @@ def login_check(email, password):
         # print("User not found register please.")
   except Exception as e:
     print("Error logging in:", e)
-
-
-# # Example usage:
-# login("datajatin90@gmail.com", "123456789")
