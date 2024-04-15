@@ -1,5 +1,11 @@
-{% extends "base.html" %} {% block dashboard %} {% block loginactiveness %}{%
+{% extends "base.html" %} 
+{% block title %}Dashboard{% endblock %}
+{% block loginactiveness %}{%
 endblock %}
+{% block dashboard %} 
+<!-- ---------------------------------------------------- -->
+
+<!-- --------------------------------- -->
 <div class="flex justify-between items-center space-x-8 box-border">
   <div>
     {% if email != "admin@gmail.com" %}
@@ -29,10 +35,8 @@ endblock %}
 
 <!-- component -->
 {% if email == "admin@gmail.com" %}
-{% block header %}{% endblock %}
+{% block header %} {% endblock %}
 {% include "admin.html" %}
-  {% endif %}
-
-  <!-- ---DASHBOARD START-------------------------------------------------------- -->
-  {% endblock %}
+{% endif %}
+{%endblock %}
 </div>

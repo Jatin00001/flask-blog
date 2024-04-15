@@ -1,3 +1,40 @@
+{% extends "base.html" %} 
+{% block title %}Admin users{% endblock %}
+{% block loginactiveness %}{%
+endblock %}
+{% block dashboard %} 
+<!-- ---------------------------------------------------- -->
+
+<!-- --------------------------------- -->
+<!-- <div class="flex justify-between items-center space-x-8 box-border">
+  <div>
+    {% if admin != True %}
+    <p
+      class="text-slate-800 focus:ring-indigo-500 border-gray-300 rounded px-4"
+    >
+      {{ email }} hello
+    </p>
+
+    {% endif %}
+  </div>
+  <div>
+    {% if admin != True %}
+    <a href="/logout">
+      <button
+        type="submit"
+        class="relative w-24 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Logout
+      </button>
+    </a>
+    {% endif %}
+  </div>
+</div> -->
+<!-- ---DASHBOARD START-------------------------------------------------------- -->
+
+<!-- component -->
+{% if admin==True %}
+{% block header %} {% endblock %}
 <div>
   <script
     src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -44,7 +81,7 @@
       <nav class="mt-10">
         <a
           class="flex items-center px-6 py-2 mt-4 text-gray-100 bg-gray-700 bg-opacity-25"
-          href="#"
+          href="/dashboard"
         >
           <svg
             class="w-6 h-6"
@@ -419,7 +456,7 @@
               >
                 <table class="min-w-full">
                   <thead>
-                    
+
                     <tr>
                       <th
                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
@@ -448,6 +485,8 @@
                   </thead>
 
                   <tbody class="bg-white">
+                    {% for users in users %}
+                    
                     <tr>
                       <td
                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
@@ -465,10 +504,10 @@
                             <div
                               class="text-sm font-medium leading-5 text-gray-900"
                             >
-                              John Doe
+                              {{users['id']}}
                             </div>
                             <div class="text-sm leading-5 text-gray-500">
-                              john@example.com
+                              {{users['name']}}
                             </div>
                           </div>
                         </div>
@@ -478,10 +517,10 @@
                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
                       >
                         <div class="text-sm leading-5 text-gray-900">
-                          Software Engineer
+                          {{users['post']}} users-post
                         </div>
                         <div class="text-sm leading-5 text-gray-500">
-                          Web dev
+                          {{users['things']}} user post role
                         </div>
                       </td>
 
@@ -503,13 +542,15 @@
                       <td
                         class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200"
                       >
+                        <!-- -----------------we add custom edit and delete btn -->
                         <a
-                          href="#"
+                          href="/admin/users/edit/{{users['id']}}""
                           class="text-indigo-600 hover:text-indigo-900"
                           >Edit</a
                         >
                       </td>
                     </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -519,4 +560,9 @@
       </main>
     </div>
   </div>
+</div>
+
+
+{% endif %}
+{%endblock %}
 </div>
