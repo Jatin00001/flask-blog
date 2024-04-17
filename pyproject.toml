@@ -2,7 +2,7 @@
 name = "repl-nix-flask-blog"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Jatin <datajatin90@gmail.com>"]
 readme = "README.md"
 packages = [{include = "repl_nix_flask_blog"}]
 
