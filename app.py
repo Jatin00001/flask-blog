@@ -97,6 +97,15 @@ def admin_users():
   return redirect(url_for('login'))
 
 
+@app.route('/admin/users/edit/<id>')
+def edit_user(id):
+  admin_email = "admin@gmail.com"
+  if 'email' in session and session['email'] == admin_email:
+    user = load_form_db_skills(id)
+    return render_template('/users/edit_user.html', user=user, admin=True)
+  return redirect(url_for('login'))
+
+
 # -------AFTER THIS SECTION ALL API WITH RAW DATA ------------------------------------------------------------------------
 @app.route('/api/skills')
 def skills():
