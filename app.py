@@ -102,7 +102,10 @@ def edit_user(id):
   admin_email = "admin@gmail.com"
   if 'email' in session and session['email'] == admin_email:
     user = load_form_db_skills(id)
-    return render_template('/users/edit_user.html', user=user, admin=True)
+    return render_template('/users/edit_user.html',
+                           user=user,
+                           admin=True,
+                           email=admin_email)
   return redirect(url_for('login'))
 
 
