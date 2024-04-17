@@ -6,6 +6,9 @@ import os
 my_secret = os.environ['DB_CONNECTION_STRING']
 
 db_connection_string = my_secret
+
+
+
 engine = create_engine(db_connection_string)
 
 
@@ -56,3 +59,11 @@ def update_blog(blog_id, title, content):
       # Handle exceptions
       print(f"Error updating blog: {e}")
       return False
+
+
+# print(fetchblogs(1))
+# print(fetchallblogs())
+
+# print(update_blog(1, "new", "jbhdjsb"))
+
+
