@@ -4,18 +4,15 @@ from sqlalchemy import create_engine, text
 import os
 
 my_secret = os.environ['DB_CONNECTION_STRING']
-
 db_connection_string = my_secret
-
-
-
 engine = create_engine(db_connection_string)
 
 
 def fetchblogs(blog_id):
   try:
     with engine.connect() as conn:
-      result = conn.execute(text("SELECT * FROM blogs WHERE blog_id = :val"), {"val": blog_id})
+      result = conn.execute(text("SELECT * FROM blogs WHERE blog_id = :val"),
+                            {"val": blog_id})
       row = result.first()
       if row:  # len(rows) gives a len of row
         return row._asdict()  # Convert row to dictionary using ._asdict()
@@ -24,7 +21,6 @@ def fetchblogs(blog_id):
   except Exception as e:
     print("An error occurred:", e)
     return None
-
 
 
 def fetchallblogs():
@@ -42,28 +38,31 @@ def fetchallblogs():
 
 def update_blog(blog_id, title, content):
   try:
-      with engine.begin() as conn:  # Start a transaction
-          update_query = text(
-              "UPDATE blogs SET title = :title, content = :content WHERE blog_id = :blog_id"
-          )
-          # Validate input
-          if not isinstance(blog_id, int) or not isinstance(title, str) or not isinstance(content, str):
-              raise ValueError("Invalid input parameters")
+    with engine.begin() as conn:  # Start a transaction
+      update_query = text(
+          "UPDATE blogs SET title = :title, content = :content WHERE blog_id = :blog_id"
+      )
+      # Validate input
+      if not isinstance(blog_id, int) or not isinstance(
+          title, str) or not isinstance(content, str):
+        raise ValueError("Invalid input parameters")
 
-          # Execute the update query
-          conn.execute(update_query, {"title": title, "content": content, "blog_id": blog_id})
+      # Execute the update query
+      conn.execute(update_query, {
+          "title": title,
+          "content": content,
+          "blog_id": blog_id
+      })
 
-      return True  # Return True if update is successful
+    return True  # Return True if update is successful
 
   except Exception as e:
-      # Handle exceptions
-      print(f"Error updating blog: {e}")
-      return False
+    # Handle exceptions
+    print(f"Error updating blog: {e}")
+    return False
 
 
 # print(fetchblogs(1))
 # print(fetchallblogs())
 
 # print(update_blog(1, "new", "jbhdjsb"))
-
-

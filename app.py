@@ -2,8 +2,9 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
-from logindatabase import loadformdbskills, load_form_blogs_db, load_form_db_skills, load_form_blogs_db_fm_id
+from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user
+from blogsdb import fetchblogs, fetchallblogs, update_blog
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -13,13 +14,13 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 @app.route('/')
 def index():
   skill = loadformdbskills()
-  blogs = load_form_blogs_db()
+  blogs = fetchallblogs()
   return render_template('landingpage.html', skills=skill, blogs=blogs)
 
 
 @app.route('/blogs/<id>')
 def get_blog(id):
-  blog = load_form_blogs_db_fm_id(id)
+  blog = fetchblogs(id)
   if blog is not None:
     # keys_list = list(blog.keys())
     return render_template('blogs.html', blog=blog)
@@ -29,8 +30,33 @@ def get_blog(id):
 
 @app.route('/all_blogs')
 def get_all_blogs():
-  blogs = load_form_blogs_db()
+  blogs = fetchallblogs()
   return render_template('all_blogs.html', blogs=blogs)
+
+
+@app.route('/admin/allpost')
+def get_all_post():
+  if 'email' in session:
+    user = session['email']
+    blogs = fetchallblogs()
+    return render_template('all_post.html', blogs=blogs, admin=True)
+  return redirect(url_for('login'))
+
+
+@app.route("/update_blog/<id>", methods=['GET', 'POST'])
+def update_blog_route(id):
+  if 'email' in session:
+    if request.method == 'POST':
+      title = request.form.get('title')
+      content = request.form.get('content')
+      slug = request.form.get('slug')
+
+      if update_blog(id, title, content):
+        return redirect(url_for('get_blog', id=id))
+      else:
+        return jsonify({"error": "Failed to update blog"}), 500
+
+  return redirect(url_for('login'))
 
 
 # Route for login page
@@ -117,7 +143,7 @@ def skills():
   return jsonify({"skills": skills})
 
 
-@app.route('/api/<id>')
+@app.route('/api/get_skill/<id>')
 def get_skill(id):
   skill = load_form_db_skills(id)
   if skill is not None:
@@ -128,7 +154,7 @@ def get_skill(id):
 
 @app.route('/api/blogs/<id>')
 def get_blog_api(id):
-  blog = load_form_blogs_db_fm_id(id)
+  blog = fetchblogs(id)
   if blog is not None:
     return jsonify({"blog": blog})
   else:

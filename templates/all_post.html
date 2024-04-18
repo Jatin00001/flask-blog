@@ -1,5 +1,5 @@
 {% extends "base.html" %} 
-{% block title %}Admin users{% endblock %}
+{% block title %}Admin tables{% endblock %}
 {% block loginactiveness %}{%
 endblock %}
 {% block dashboard %} 
@@ -471,12 +471,12 @@ endblock %}
                       <th
                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                       >
-                        Status
+                        Edit
                       </th>
                       <th
                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                       >
-                        Role
+                        Delete
                       </th>
                       <th
                         class="px-6 py-3 border-b border-gray-200 bg-gray-50"
@@ -485,7 +485,7 @@ endblock %}
                   </thead>
 
                   <tbody class="bg-white">
-                    {% for users in users %}
+                    {% for blog in blogs %}
                     
                     <tr>
                       <td
@@ -504,10 +504,10 @@ endblock %}
                             <div
                               class="text-sm font-medium leading-5 text-gray-900"
                             >
-                              {{users['id']}}
+                              {{blog['blog_id']}}
                             </div>
                             <div class="text-sm leading-5 text-gray-500">
-                              {{users['name']}}
+                              {{blog['slug'][:30]}}
                             </div>
                           </div>
                         </div>
@@ -517,37 +517,43 @@ endblock %}
                         class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
                       >
                         <div class="text-sm leading-5 text-gray-900">
-                          {{users['post']}} users-post
+                          {{blog['title']}}
                         </div>
                         <div class="text-sm leading-5 text-gray-500">
-                          {{users['things']}} user post role
+                          {{blog['content']}}
                         </div>
-                      </td>
-
-                      <td
-                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200"
-                      >
-                        <span
-                          class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
-                          >Active</span
-                        >
                       </td>
 
                       <td
                         class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
                       >
-                        Owner
+                        <a
+                          href="/admin/users/edit/{{blog['blog_id']}}""
+                          class="text-indigo-600 hover:text-indigo-900"
+                          >Edit</a
+                        >
+                        
+                      </td>
+
+                      <td
+                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200"
+                      >
+                         <a
+                          href="/admin/users/delete/{{blog['blog_id']}}""
+                          class="text-indigo-600 hover:text-indigo-900"
+                          >Delete</a
+                        >
                       </td>
 
                       <td
                         class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200"
                       >
                         <!-- -----------------we add custom edit and delete btn -->
-                        <a
-                          href="/admin/users/edit/{{users['id']}}""
+                        <!-- <a
+                          href="/admin/users/edit/{{blog['blog_id']}}""
                           class="text-indigo-600 hover:text-indigo-900"
-                          >Edit</a
-                        >
+                          >Delete</a
+                        > -->
                       </td>
                     </tr>
                     {% endfor %}
