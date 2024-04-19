@@ -36,22 +36,23 @@ def fetchallblogs():
     return None
 
 
-def update_blog(blog_id, title, content):
+def update_blog(blog_id, title, content,slug):
   try:
     with engine.begin() as conn:  # Start a transaction
       update_query = text(
-          "UPDATE blogs SET title = :title, content = :content WHERE blog_id = :blog_id"
+          "UPDATE blogs SET title = :title, content = :content, slug = :slug WHERE blog_id = :blog_id"
       )
-      # Validate input
-      if not isinstance(blog_id, int) or not isinstance(
-          title, str) or not isinstance(content, str):
-        raise ValueError("Invalid input parameters")
+      # # Validate input
+      # if not (isinstance(blog_id, int) and isinstance(title, str) and isinstance(content, str) and isinstance(slug, str)):
+      #   raise ValueError("Invalid input parameters")
+
 
       # Execute the update query
       conn.execute(update_query, {
+          "blog_id": blog_id,
           "title": title,
           "content": content,
-          "blog_id": blog_id
+          "slug": slug
       })
 
     return True  # Return True if update is successful
@@ -65,4 +66,4 @@ def update_blog(blog_id, title, content):
 # print(fetchblogs(1))
 # print(fetchallblogs())
 
-# print(update_blog(1, "new", "jbhdjsb"))
+# print(update_blog(1, "new", "jbhdjsb","hello"))

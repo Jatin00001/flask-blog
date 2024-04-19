@@ -62,32 +62,51 @@ def get_all_post():
   return redirect(url_for('login'))
 
 
-@app.route('/dashboard/admin/allpost/user/edit/<id>')
+@app.route('/dashboard/admin/allpost/user/edit/<id>' , methods=['GET', 'POST'])
 def edit_user(id):
-
   if 'email' in session and session['email'] == my_secret_admin:
-    user = load_form_db_skills(id)
-    return render_template('/users/edit_user.html',
-                           user=user,
-                           admin=True,
-                           email=my_secret_admin)
-  return redirect(url_for('login'))
 
-
-@app.route("/update_blog/<id>", methods=['GET', 'POST'])
-def update_blog_route(id):
-  if 'email' in session:
     if request.method == 'POST':
+      
       title = request.form.get('title')
       content = request.form.get('content')
       slug = request.form.get('slug')
 
-      if update_blog(id, title, content):
+      if update_blog(id, title, content, slug):
+        print("Updated blog successfully")
         return redirect(url_for('get_blog', id=id))
       else:
         return jsonify({"error": "Failed to update blog"}), 500
 
+    else:
+      blog = fetchblogs(id)
+      if blog is not None:
+        print("IN fetch by id block")
+        return render_template(
+            '/users/edit_user.html',
+            blog=blog,
+            admin=True,
+            email=my_secret_admin,
+        form_action=url_for('edit_user', id=id))
+
   return redirect(url_for('login'))
+
+
+# @app.route("/dashboard/admin/allpost/user/edit/<id>", methods=['GET', 'POST'])
+# def update_blog_route(id):
+#   if 'email' in session and session['email'] == my_secret_admin:
+#     if request.method == 'POST':
+#       blog_id = id
+#       title = request.form.get('title')
+#       content = request.form.get('content')
+#       slug = request.form.get('slug')
+
+#       if update_blog(blog_id, title, content, slug):
+#         return redirect(url_for('get_blog', id=id))
+#       else:
+#         return jsonify({"error": "Failed to update blog"}), 500
+
+#   return redirect(url_for('login'))
 
 
 # Route for login page
