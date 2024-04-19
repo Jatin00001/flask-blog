@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 
-<!-- ---------------------------------------------------------------------------------------------------------- -->
 <!-- hero section -->
 <section class="text-gray-600 body-font">
   <div
@@ -391,6 +390,31 @@
 </section> -->
 <!-- -------------------------END CONTENT FOR PROJECT--------------------------------------------------------------------------------- -->
 
+<!-- -----------------------------------UNDER TESTING----------------------------------------------------------------------- -->
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div
+      class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto"
+    >
+      <h1
+        class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900"
+      >
+        "During testing, this website and some pages may be temporarily
+        unavailable as we are actively working on improvements. We apologize for
+        any inconvenience this may cause and appreciate your patience. Thank you
+        for visiting.
+      </h1>
+      <!-- <button
+        class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0"
+      >
+        Button
+      </button> -->
+    </div>
+  </div>
+</section>
+
+<!-- --------------------------------------------------------------------------------------------------------- -->
+
 <!-- -----------------------BLOGS----------------------------------------------------------------------------------- -->
 <div class="container px-5 pt-5 mx-auto">
   <h1
@@ -433,7 +457,7 @@
         >
           <a
             class="text-red-500 inline-flex items-center"
-              href="{{url_for('get_blog', id=blogs['blog_id'])}}"
+            href="{{url_for('get_blog', id=blogs['blog_id'])}}"
             >Read More
             <svg
               class="w-4 h-4 ml-2"

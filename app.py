@@ -92,22 +92,6 @@ def edit_user(id):
   return redirect(url_for('login'))
 
 
-# @app.route("/dashboard/admin/allpost/user/edit/<id>", methods=['GET', 'POST'])
-# def update_blog_route(id):
-#   if 'email' in session and session['email'] == my_secret_admin:
-#     if request.method == 'POST':
-#       blog_id = id
-#       title = request.form.get('title')
-#       content = request.form.get('content')
-#       slug = request.form.get('slug')
-
-#       if update_blog(blog_id, title, content, slug):
-#         return redirect(url_for('get_blog', id=id))
-#       else:
-#         return jsonify({"error": "Failed to update blog"}), 500
-
-#   return redirect(url_for('login'))
-
 
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])
