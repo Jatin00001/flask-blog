@@ -5,6 +5,9 @@ from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user
 from blogsdb import fetchblogs, fetchallblogs, update_blog
+import os
+
+my_secret_admin = os.environ['admin_email']
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -34,12 +37,40 @@ def get_all_blogs():
   return render_template('all_blogs.html', blogs=blogs)
 
 
-@app.route('/admin/allpost')
+@app.route('/dashboard')
+def dashboard():
+  if 'email' in session:
+    current_user = session['email']
+    return render_template('dashboard.html', email=current_user)
+  return render_template('login.html')
+
+
+@app.route('/dashboard/admin/users')
+def admin_users():
+  if 'email' in session and session['email'] == my_secret_admin:
+    users = loadformdbskills()
+    return render_template('/users/admin_users.html', users=users, admin=True)
+  return redirect(url_for('login'))
+
+
+@app.route('/dashboard/admin/allpost')
 def get_all_post():
   if 'email' in session:
-    user = session['email']
+    # user = session['email']
     blogs = fetchallblogs()
     return render_template('all_post.html', blogs=blogs, admin=True)
+  return redirect(url_for('login'))
+
+
+@app.route('/dashboard/admin/allpost/user/edit/<id>')
+def edit_user(id):
+
+  if 'email' in session and session['email'] == my_secret_admin:
+    user = load_form_db_skills(id)
+    return render_template('/users/edit_user.html',
+                           user=user,
+                           admin=True,
+                           email=my_secret_admin)
   return redirect(url_for('login'))
 
 
@@ -76,14 +107,6 @@ def login():
   return render_template('login.html')
 
 
-@app.route('/dashboard')
-def dashboard():
-  if 'email' in session:
-    current_user = session['email']
-    return render_template('dashboard.html', email=current_user)
-  return render_template('login.html')
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
   if 'email' in session:
@@ -111,27 +134,6 @@ def logout():
   if 'email' in session:
     session.pop('email', None)
     return render_template('login.html')
-  return redirect(url_for('login'))
-
-
-@app.route('/admin/users')
-def admin_users():
-  admin_email = "admin@gmail.com"
-  if 'email' in session and session['email'] == admin_email:
-    users = loadformdbskills()
-    return render_template('/users/admin_users.html', users=users, admin=True)
-  return redirect(url_for('login'))
-
-
-@app.route('/admin/users/edit/<id>')
-def edit_user(id):
-  admin_email = "admin@gmail.com"
-  if 'email' in session and session['email'] == admin_email:
-    user = load_form_db_skills(id)
-    return render_template('/users/edit_user.html',
-                           user=user,
-                           admin=True,
-                           email=admin_email)
   return redirect(url_for('login'))
 
 
