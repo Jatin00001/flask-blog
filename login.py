@@ -36,7 +36,7 @@ def register_new_user(username, password, email):
     with engine.connect() as conn:
       # Check if email already exists
       email_check_query = text(
-          "SELECT COUNT(*) FROM userdatalogin WHERE email = :email")
+          "SELECT COUNT(*) FROM users WHERE email = :email")
       email_count = conn.execute(email_check_query, {
           "email": email
       }).fetchone()[0]
@@ -50,7 +50,7 @@ def register_new_user(username, password, email):
 
       # Insert user into the database
       insert_query = text(
-          "INSERT INTO userdatalogin (username, password, email) VALUES (:username, :password, :email)"
+          "INSERT INTO users (username, password, email) VALUES (:username, :password, :email)"
       )
       user_data = {
           "username": new_user.username,
@@ -74,8 +74,7 @@ def login_check(email, password):
     with engine.connect() as conn:
       # Fetch user data from the database
       select_query = text(
-          "SELECT email, password,username FROM userdatalogin WHERE email = :email"
-      )
+          "SELECT email, password,username FROM users WHERE email = :email")
       result = conn.execute(select_query, {"email": email}).fetchone()
 
       if result:
@@ -93,3 +92,6 @@ def login_check(email, password):
         # print("User not found register please.")
   except Exception as e:
     print("Error logging in:", e)
+
+
+# register_new_user("test2", "test12345", "test2@gmail.com")
