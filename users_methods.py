@@ -1,6 +1,6 @@
 # connect_args = {'ssl': {'cert': '/path/to/certificate.pem'}}
 from sqlalchemy import create_engine, text
-import bcrypt
+
 import os
 
 my_secret = os.environ['DB_CONNECTION_STRING']
@@ -16,10 +16,24 @@ def get_users():
       users = []
       for row in result.all():
         users.append(row._asdict())  # Convert row to dictionary
-      return users, 200
+      return users
   except Exception as e:
     print(e)
     return None, 500
+
+
+def user_by_query():
+  try:
+    with engine.connect() as conn:
+      result = conn.execute(text("SELECT username, email, role FROM users"))
+      users = []
+      for row in result.all():
+        users.append(row._asdict())  # Convert row to dictionary
+      return users
+  except Exception as e:
+    print("Error fetching users:", e)
+    return None, 500
+
 
 def get_users_count():
   try:
@@ -32,3 +46,14 @@ def get_users_count():
     return None, 500
 
 
+def delete_user(id):
+  try:
+    with engine.connect() as conn:
+      # Delete user from the database
+      delete_query = text("DELETE FROM users WHERE id = :id")
+      conn.execute(delete_query, {"id": id})
+      conn.commit()
+      return True, 200
+  except Exception as e:
+    print("Error deleting user:", e)
+    return None, 500

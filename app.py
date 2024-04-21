@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user, admin_email
 from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs
-from users_methods import get_users, get_users_count
+from users_methods import get_users_count, user_by_query
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -46,11 +46,12 @@ def dashboard():
 @app.route('/dashboard/admin/users')
 def admin_users():
   if 'email' in session and session['email'] == admin_email():
-    # users = loadformdbskills()
     users = get_users_count()
+    users_data = user_by_query()
     total_blog = total_blogs()
     return render_template('/users/admin_users.html',
                            users=users,
+                           users_data=users_data,
                            total_blogs=total_blog,
                            admin=True)
   return redirect(url_for('login'))
