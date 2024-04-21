@@ -78,7 +78,6 @@ def delete_user(id):
       delete_user_query = text("DELETE FROM users WHERE user_id = :id")
       conn.execute(delete_user_query, {"id": id})
       conn.commit()
-
       return True
   except Exception as e:
     print("Error deleting user:", e)

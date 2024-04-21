@@ -72,8 +72,3 @@ def total_blogs():
     print(e)
     return None, 500
 
-
-# print(fetchblogs(1))
-# print(fetchallblogs())
-
-# print(update_blog(1, "new", "jbhdjsb","hello"))
