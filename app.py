@@ -5,7 +5,7 @@ from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user, admin_email
 from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs
-from users_methods import get_users_count, user_by_query
+from users_methods import get_users_count, user_by_query, delete_user
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -55,6 +55,41 @@ def admin_users():
                            total_blogs=total_blog,
                            admin=True)
   return redirect(url_for('login'))
+
+
+# @app.route('/dashboard/admin/users/delete/<id>', methods=['GET', 'POST'])
+# def delete_user_admin(id):
+#   if 'email' in session and session['email'] == admin_email():
+#     if request.method == 'POST':
+#       delete_user_admin_data = delete_user(id)
+#       if delete_user_admin_data:
+#         return redirect(url_for('admin_users'))
+#       else:
+#         return jsonify({"error": "User not found"}), 404
+#   return redirect(url_for('login'))
+# from flask import request, session, redirect, url_for, jsonify
+
+
+@app.route('/dashboard/admin/users/delete/<int:id>', methods=['GET', 'POST'])
+def delete_user_admin(id):
+  # Check if user is logged in as admin
+  if 'email' in session and session['email'] == admin_email():
+    # if request.method == 'POST':
+    # Perform deletion action
+    # delete_user_admin_data = delete_user(id)
+    if delete_user(id):
+      # User deleted successfully, redirect to admin users page
+      return redirect(url_for('admin_users'))
+    else:
+      # User not found, return error response
+      return jsonify({"error": "User not found"}), 404
+  # else:
+  #   # GET request, show confirmation page
+  #   # return render_template('delete_confirmation.html', user_id=id)
+  #   return jsonify({"error": "User not found"}), 404
+  else:
+    # User is not logged in as admin, redirect to login page
+    return redirect(url_for('login'))
 
 
 @app.route('/dashboard/admin/allpost')
