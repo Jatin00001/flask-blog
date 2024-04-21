@@ -36,7 +36,7 @@ def fetchallblogs():
     return None
 
 
-def update_blog(blog_id, title, content,slug):
+def update_blog(blog_id, title, content, slug):
   try:
     with engine.begin() as conn:  # Start a transaction
       update_query = text(
@@ -45,7 +45,6 @@ def update_blog(blog_id, title, content,slug):
       # # Validate input
       # if not (isinstance(blog_id, int) and isinstance(title, str) and isinstance(content, str) and isinstance(slug, str)):
       #   raise ValueError("Invalid input parameters")
-
 
       # Execute the update query
       conn.execute(update_query, {
@@ -61,6 +60,17 @@ def update_blog(blog_id, title, content,slug):
     # Handle exceptions
     print(f"Error updating blog: {e}")
     return False
+
+
+def total_blogs():
+  try:
+    with engine.connect() as conn:
+      result = conn.execute(text("SELECT COUNT(*) FROM blogs"))
+      count = result.fetchone()[0]
+      return count, 200
+  except Exception as e:
+    print(e)
+    return None, 500
 
 
 # print(fetchblogs(1))

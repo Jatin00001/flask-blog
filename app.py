@@ -3,15 +3,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
-from login import login_check, register_new_user
-from blogsdb import fetchblogs, fetchallblogs, update_blog
-import os
-
-my_secret_admin = os.environ['admin_email']
+from login import login_check, register_new_user, admin_email
+from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs
+from users_methods import get_users, get_users_count
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-app.secret_key = 'your_secret_key'  # Change this to a random secret key
+app.secret_key = 'sdsdsdasdsdsdscsasxsxsaxwhbdbwejbdijwendiwuhiiiuduiweduiweduihweduihweudhweuidhweuidhwe'  # Change this to a random secret key
 
 
 @app.route('/')
@@ -47,9 +45,14 @@ def dashboard():
 
 @app.route('/dashboard/admin/users')
 def admin_users():
-  if 'email' in session and session['email'] == my_secret_admin:
-    users = loadformdbskills()
-    return render_template('/users/admin_users.html', users=users, admin=True)
+  if 'email' in session and session['email'] == admin_email():
+    # users = loadformdbskills()
+    users = get_users_count()
+    total_blog = total_blogs()
+    return render_template('/users/admin_users.html',
+                           users=users,
+                           total_blogs=total_blog,
+                           admin=True)
   return redirect(url_for('login'))
 
 
@@ -62,12 +65,12 @@ def get_all_post():
   return redirect(url_for('login'))
 
 
-@app.route('/dashboard/admin/allpost/user/edit/<id>' , methods=['GET', 'POST'])
+@app.route('/dashboard/admin/allpost/user/edit/<id>', methods=['GET', 'POST'])
 def edit_user(id):
-  if 'email' in session and session['email'] == my_secret_admin:
+  if 'email' in session and session['email'] == admin_email():
 
     if request.method == 'POST':
-      
+
       title = request.form.get('title')
       content = request.form.get('content')
       slug = request.form.get('slug')
@@ -82,15 +85,13 @@ def edit_user(id):
       blog = fetchblogs(id)
       if blog is not None:
         print("IN fetch by id block")
-        return render_template(
-            '/users/edit_user.html',
-            blog=blog,
-            admin=True,
-            email=my_secret_admin,
-        form_action=url_for('edit_user', id=id))
+        return render_template('/users/edit_user.html',
+                               blog=blog,
+                               admin=True,
+                               email=admin_email(),
+                               form_action=url_for('edit_user', id=id))
 
   return redirect(url_for('login'))
-
 
 
 # Route for login page
