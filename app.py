@@ -37,7 +37,11 @@ def get_blog(id):
   blog = fetchblogs(id)
   if blog is not None:
     # keys_list = list(blog.keys())
-    return render_template('blogs.html', blog=blog, login=None,)
+    return render_template(
+        'blogs.html',
+        blog=blog,
+        login=None,
+    )
   else:
     return jsonify({"error": "Blog not found"}), 404
 
