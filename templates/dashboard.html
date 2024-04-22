@@ -1,28 +1,12 @@
-{% extends "base.html" %} 
-{% block title %}
-{% if email == admin %}
-  Admin dashboard
-{% elif email != admin %}
-  User dashboard
-{% endif %}
-{% endblock %}
-{% block loginactiveness %}we manual add {%
-endblock %}
-{% block dashboard %} 
+{% extends "base.html" %}
+<!-- ----- -->
+{% block title %} {% if email == admin %} Admin dashboard {% elif email != admin
+%} User dashboard {% endif %} {% endblock %}
+<!-- ---------------------------------------------------------------------- -->
+{% block loginactiveness %}we manual add {% endblock %}
+<!-- ---- -->
 
-
-{% if email == admin %}
-    {% block admin_header %} {% endblock %}
-    {% include "admin.html" %}
-{% elif email != admin %}
-    {% block user_normal_header %} {% endblock %}
-    {% include "/normal_users/user_dashboard.html" %}
-{% else %}
-    <!-- Handle case when email is not provided -->
-    <p>Email not provided.</p>
-    <a href="/login">login</a>
-    <p>Please log in to view the content.</p>
-{% endif %}
-
-{% endblock %}
-</div>
+<!-- ------------------------ -->
+{% block dashboard %} {% if email == admin %} {% block admin_header %} {%
+endblock %} {% include "admin.html" %} {% elif email != admin %} {% include
+"/normal_users/user_dashboard.html" %} {% endif %} {% endblock %}

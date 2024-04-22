@@ -66,9 +66,7 @@ def dashboard():
 
   elif 'email' in session:
     current_user = session['email']
-    return render_template('dashboard.html',
-                           admin=admin_email(),
-                           email=current_user)
+    return render_template('/normal_users/user_dashboard.html', email=current_user)
   return render_template('login.html')
 
 
