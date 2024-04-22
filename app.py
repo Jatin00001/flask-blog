@@ -16,23 +16,40 @@ app.secret_key = 'sdsdsdasdsdsdscsasxsxsaxwhbdbwejbdijwendiwuhiiiuduiweduiweduih
 def index():
   skill = loadformdbskills()
   blogs = fetchallblogs()
-  return render_template('landingpage.html', skills=skill, blogs=blogs)
+  if 'email' in session:
+    current_user = session['email']
+    return render_template('landingpage.html',
+                           skills=skill,
+                           blogs=blogs,
+                           login=current_user)
+  return render_template('landingpage.html',
+                         skills=skill,
+                         blogs=blogs,
+                         login=None)
 
 
 @app.route('/blogs/<id>')
 def get_blog(id):
+  if 'email' in session:
+    blog = fetchblogs(id)
+    login = session['email']
+    return render_template('blogs.html', blog=blog, login=login)
   blog = fetchblogs(id)
   if blog is not None:
     # keys_list = list(blog.keys())
-    return render_template('blogs.html', blog=blog)
+    return render_template('blogs.html', blog=blog, login=None,)
   else:
     return jsonify({"error": "Blog not found"}), 404
 
 
 @app.route('/all_blogs')
 def get_all_blogs():
+  if 'email' in session:
+    blogs = fetchallblogs()
+    login = session['email']
+    return render_template('all_blogs.html', blogs=blogs, login=login)
   blogs = fetchallblogs()
-  return render_template('all_blogs.html', blogs=blogs)
+  return render_template('all_blogs.html', blogs=blogs, login=None)
 
 
 @app.route('/dashboard')

@@ -1,5 +1,21 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+<!-- ---------------------------------------------login btn------------------------- -->
+
+{% block loginactiveness %}
+<!-- Other content -->
+
+<!-- Conditional login visibility -->
+{% if login %}
+<!-- Show logout button if the user is logged in -->
+<a  href="/logout">Logout
+{% else %}
+<!-- Show login button if the user is not logged in -->
+<a href="/login">Login</a>
+{% endif %}{% endblock %}
+
+<!-- ---------------------------------------------content---- -->
+{% block content %}
 
 <!-- hero section -->
 <section class="text-gray-600 body-font">
