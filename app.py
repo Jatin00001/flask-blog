@@ -58,9 +58,17 @@ def get_all_blogs():
 
 @app.route('/dashboard')
 def dashboard():
-  if 'email' in session:
+  if 'email' in session and session['email'] == admin_email():
     current_user = session['email']
-    return render_template('dashboard.html', email=current_user)
+    return render_template('dashboard.html',
+                           admin=admin_email(),
+                           email=current_user)
+
+  elif 'email' in session:
+    current_user = session['email']
+    return render_template('dashboard.html',
+                           admin=admin_email(),
+                           email=current_user)
   return render_template('login.html')
 
 
@@ -115,10 +123,15 @@ def delete_user_admin(id):
 
 @app.route('/dashboard/admin/allpost')
 def get_all_post():
-  if 'email' in session:
+  if 'email' in session and session['email'] == admin_email():
     # user = session['email']
+    admin = admin_email()
+    email = session['email']
     blogs = fetchallblogs()
-    return render_template('all_post.html', blogs=blogs, admin=True)
+    return render_template('all_post.html',
+                           blogs=blogs,
+                           admin=admin,
+                           email=email)
   return redirect(url_for('login'))
 
 
@@ -141,14 +154,14 @@ def edit_user(id):
     else:
       blog = fetchblogs(id)
       if blog is not None:
-        print("IN fetch by id block")
+        # print("IN fetch by id block")
         return render_template('/users/edit_user.html',
                                blog=blog,
                                admin=True,
                                email=admin_email(),
                                form_action=url_for('edit_user', id=id))
 
-  return redirect(url_for('login'))
+  return jsonify({"Error": "Page not found"})
 
 
 # Route for login page

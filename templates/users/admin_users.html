@@ -1,36 +1,11 @@
 {% extends "base.html" %} {% block title %}All users{% endblock %} {% block
 loginactiveness %}{% endblock %} {% block dashboard %}
-<!-- ---------------------------------------------------- -->
 
-<!-- --------------------------------- -->
-<!-- <div class="flex justify-between items-center space-x-8 box-border">
-  <div>
-    {% if admin != True %}
-    <p
-      class="text-slate-800 focus:ring-indigo-500 border-gray-300 rounded px-4"
-    >
-      {{ email }} hello
-    </p>
-
-    {% endif %}
-  </div>
-  <div>
-    {% if admin != True %}
-    <a href="/logout">
-      <button
-        type="submit"
-        class="relative w-24 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Logout
-      </button>
-    </a>
-    {% endif %}
-  </div>
-</div> -->
 <!-- ---DASHBOARD START-------------------------------------------------------- -->
 
 <!-- component -->
-{% if admin==True %} {% block header %} {% endblock %}
+
+{% if admin==True %} {% block admin_header %} {% endblock %}
 <div>
   <script
     src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"

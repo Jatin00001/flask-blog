@@ -1,42 +1,28 @@
 {% extends "base.html" %} 
-{% block title %}admin dashboard{% endblock %}
-{% block loginactiveness %}{%
+{% block title %}
+{% if email == admin %}
+  Admin dashboard
+{% elif email != admin %}
+  User dashboard
+{% endif %}
+{% endblock %}
+{% block loginactiveness %}we manual add {%
 endblock %}
 {% block dashboard %} 
-<!-- ---------------------------------------------------- -->
 
-<!-- --------------------------------- -->
-<div class="flex justify-between items-center space-x-8 box-border">
-  <div>
-    {% if email != "admin@gmail.com" %}
-    <p
-      class="text-slate-800 focus:ring-indigo-500 border-gray-300 rounded px-4"
-    >
-      {{ email }} hello
-    </p>
 
-    {% endif %}
-  </div>
-  <div>
-    {% if email != "admin@gmail.com" %}
-    <a href="/logout">
-      <button
-        type="submit"
-        class="relative w-24 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Logout
-      </button>
-    </a>
-    {% endif %}
-  </div>
-</div>
-
-<!-- ---DASHBOARD START-------------------------------------------------------- -->
-
-<!-- component -->
-{% if email ==  "admin@gmail.com" %}
-{% block header %} {% endblock %}
-{% include "admin.html" %}
+{% if email == admin %}
+    {% block admin_header %} {% endblock %}
+    {% include "admin.html" %}
+{% elif email != admin %}
+    {% block user_normal_header %} {% endblock %}
+    {% include "/normal_users/user_dashboard.html" %}
+{% else %}
+    <!-- Handle case when email is not provided -->
+    <p>Email not provided.</p>
+    <a href="/login">login</a>
+    <p>Please log in to view the content.</p>
 {% endif %}
-{%endblock %}
+
+{% endblock %}
 </div>
