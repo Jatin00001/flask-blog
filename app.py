@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user, admin_email
-from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs
+from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs, add_blog
 from users_methods import get_users_count, user_by_query, delete_user
 
 app = Flask(__name__)
@@ -66,7 +66,8 @@ def dashboard():
 
   elif 'email' in session:
     current_user = session['email']
-    return render_template('/normal_users/user_dashboard.html', email=current_user)
+    return render_template('/normal_users/user_dashboard.html',
+                           email=current_user)
   return render_template('login.html')
 
 
@@ -133,6 +134,23 @@ def get_all_post():
   return redirect(url_for('login'))
 
 
+@app.route('/dashboard/admin/allpost/add_post', methods=['GET', 'POST'])
+def add_post():
+  if 'email' in session and session['email'] == admin_email():
+    if request.method == 'POST':
+      title = request.form['title']
+      content = request.form['content']
+      slug = request.form['slug']
+      if add_blog(title, content, slug):
+        print("Blog added successfully")
+        return redirect(url_for('get_all_post'))
+
+      return redirect(url_for('get_all_post'))
+    return render_template('/users/add_post.html')
+
+  return redirect(url_for('login'))
+
+
 @app.route('/dashboard/admin/allpost/user/edit/<id>', methods=['GET', 'POST'])
 def edit_user(id):
   if 'email' in session and session['email'] == admin_email():
@@ -165,6 +183,9 @@ def edit_user(id):
 # Route for login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+  if 'email' in session and session['email'] == admin_email():
+    return redirect(url_for('dashboard'))
+
   if 'email' in session:
     current_user = session['email']
     return render_template('dashboard.html', email=current_user)

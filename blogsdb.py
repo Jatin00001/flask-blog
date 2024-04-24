@@ -72,3 +72,20 @@ def total_blogs():
     print(e)
     return None, 500
 
+
+def add_blog(title, content, slug):
+  try:
+    with engine.connect() as conn:
+      insert_query = text(
+          "INSERT INTO blogs (title, content, slug) VALUES (:title, :content, :slug)"
+      )
+      conn.execute(insert_query, {
+          "title": title,
+          "content": content,
+          "slug": slug
+      })
+      conn.commit()
+      return True
+  except Exception as e:
+    print(e)
+    return False
