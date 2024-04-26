@@ -25,19 +25,7 @@ def loadformdbskills():
     print(e)
 
 
-# def admin_email():
-#   try:
-#     with engine.connect() as conn:
-#       # Assuming you have a 'users' table with columns 'email' and 'role'
-#       admin = "admin"
-#       result = conn.execute(
-#           text("SELECT email FROM users WHERE role = :admin"),
-#           {"admin": admin})
-#       admin_email = result.fetchone()[0]
-#       return admin_email
-#   except Exception as e:
-#     print("Error fetching admin email:", e)
-#     return None
+
 
 
 def load_form_db_skills(id):

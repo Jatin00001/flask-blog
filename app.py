@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
-from login import login_check, register_new_user, admin_email
+from login import login_check, register_new_user, admin_email, get_auth_id
 from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs, add_blog
 from users_methods import get_users_count, user_by_query, delete_user
 
@@ -85,19 +85,6 @@ def admin_users():
   return redirect(url_for('login'))
 
 
-# @app.route('/dashboard/admin/users/delete/<id>', methods=['GET', 'POST'])
-# def delete_user_admin(id):
-#   if 'email' in session and session['email'] == admin_email():
-#     if request.method == 'POST':
-#       delete_user_admin_data = delete_user(id)
-#       if delete_user_admin_data:
-#         return redirect(url_for('admin_users'))
-#       else:
-#         return jsonify({"error": "User not found"}), 404
-#   return redirect(url_for('login'))
-# from flask import request, session, redirect, url_for, jsonify
-
-
 @app.route('/dashboard/admin/users/delete/<int:id>', methods=['GET', 'POST'])
 def delete_user_admin(id):
   # Check if user is logged in as admin
@@ -139,13 +126,26 @@ def add_post():
   if 'email' in session and session['email'] == admin_email():
     if request.method == 'POST':
       title = request.form['title']
-      content = request.form['content']
       slug = request.form['slug']
-      if add_blog(title, content, slug):
-        print("Blog added successfully")
+      subhead = request.form['content']
+      content = request.form['content']
+      # description = request.form['description']
+      # return jsonify({
+      #     "title": title,
+      #     "subhead": subhead,
+      #     "content": content,
+      #     "slug": slug
+      # })
+      currentuser = session['email']
+      get_auth = get_auth_id(currentuser)
+      if add_blog(title, slug, content, subhead, get_auth):
+        print(f"Blog added successfully: {title}")
         return redirect(url_for('get_all_post'))
-
+      # if add_blog(title, content, slug):
+      #   print("Blog added successfully")
+      #   return redirect(url_for('get_all_post'))
       return redirect(url_for('get_all_post'))
+
     return render_template('/users/add_post.html')
 
   return redirect(url_for('login'))

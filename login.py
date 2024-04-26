@@ -109,3 +109,15 @@ def admin_email():
     return None
 
 
+def get_auth_id(email):
+  try:
+    with engine.connect() as conn:
+      # Assuming you have a 'users' table with columns 'email' and 'role'
+      result = conn.execute(
+          text("SELECT user_id FROM users WHERE email = :email"),
+          {"email": email})
+      auth_id = result.fetchone()[0]
+      return auth_id
+  except Exception as e:
+    print("Error fetching email:", e)
+    return None

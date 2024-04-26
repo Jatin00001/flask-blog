@@ -73,19 +73,36 @@ def total_blogs():
     return None, 500
 
 
-def add_blog(title, content, slug):
+def add_blog(title, slug, content, subhead, author_id):
   try:
     with engine.connect() as conn:
-      insert_query = text(
-          "INSERT INTO blogs (title, content, slug) VALUES (:title, :content, :slug)"
+      query = text(
+          "INSERT INTO blogs (title, slug, subhead, content, author_id) VALUES (:title, :slug, :subhead, :content, :author_id)"
       )
-      conn.execute(insert_query, {
-          "title": title,
-          "content": content,
-          "slug": slug
-      })
+      conn.execute(
+          query, {
+              "title": title,
+              "slug": slug,
+              "subhead": subhead,
+              "content": content,
+              "author_id": author_id
+          })
+
       conn.commit()
       return True
   except Exception as e:
     print(e)
+    return False
+
+
+def delete_blog(blog_id):
+  try:
+    with engine.connect() as conn:
+      # Delete user from the database
+      delete_query = text("DELETE FROM blogs WHERE blog_id = :id")
+      conn.execute(delete_query, {"id": blog_id})
+      conn.commit()
+      return True
+  except Exception as e:
+    print("Error deleting user:", e)
     return False
