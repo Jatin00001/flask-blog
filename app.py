@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user, admin_email, get_auth_id
-from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs, add_blog
+from blogsdb import fetchblogs, fetchallblogs, update_blog, total_blogs, add_blog, delete_blog
 from users_methods import get_users_count, user_by_query, delete_user
 
 app = Flask(__name__)
@@ -129,13 +129,6 @@ def add_post():
       slug = request.form['slug']
       subhead = request.form['content']
       content = request.form['content']
-      # description = request.form['description']
-      # return jsonify({
-      #     "title": title,
-      #     "subhead": subhead,
-      #     "content": content,
-      #     "slug": slug
-      # })
       currentuser = session['email']
       get_auth = get_auth_id(currentuser)
       if add_blog(title, slug, content, subhead, get_auth):
@@ -178,6 +171,25 @@ def edit_user(id):
                                form_action=url_for('edit_user', id=id))
 
   return jsonify({"Error": "Page not found"})
+
+
+@app.route('/dashboard/admin/allpost/delete/<int:id>', methods=['GET', 'POST'])
+def delete_blog_route(id):
+  if 'email' in session and session['email'] == admin_email():
+    if request.method == 'POST':
+      # Perform deletion action
+      if delete_blog(id):
+        # Blog deleted successfully, redirect to admin all posts page
+        return redirect(url_for('get_all_post'))
+      else:
+        # Blog not found, return error response
+        return jsonify({"error": "Blog not found"}), 404
+    else:
+      # Display confirmation page for deleting blog with ID
+      return f"Are you sure you want to delete blog with ID {id}? <form action='/dashboard/admin/allpost/delete/{id}' method='post'><input type='submit' value='Delete'></form>"
+  else:
+    # Unauthorized access, redirect to login page
+    return redirect(url_for('login'))
 
 
 # Route for login page
