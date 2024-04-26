@@ -242,6 +242,14 @@ def logout():
   return redirect(url_for('login'))
 
 
+# ---------------------------------------------------------user------------------------
+
+
+@app.route('/about')
+def about():
+  return render_template('/about/about.html')
+
+
 # -------AFTER THIS SECTION ALL API WITH RAW DATA ------------------------------------------------------------------------
 @app.route('/api/skills')
 def skills():

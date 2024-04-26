@@ -8,6 +8,8 @@ module.exports = {
     "./node_modules/flowbite/**/*.js",
     "./templates/**/*.html",
     "./static/js/**/*.js",
+    "./templates/About/about.html",
+    "*",
   ],
   theme: {
     extend: {
