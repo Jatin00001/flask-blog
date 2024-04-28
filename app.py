@@ -1,6 +1,6 @@
 # main.py
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_file
 from flask_bcrypt import Bcrypt
 from logindatabase import loadformdbskills, load_form_db_skills
 from login import login_check, register_new_user, admin_email, get_auth_id
@@ -240,6 +240,15 @@ def logout():
     session.pop('email', None)
     return render_template('login.html')
   return redirect(url_for('login'))
+
+
+# ----------------------------------
+
+
+@app.route('/download')
+def download_resume():
+  resume_path = 'static/assets/resume_download/resume.pdf'  # Update with the actual path to your resume file
+  return send_file(resume_path, as_attachment=True)
 
 
 # ---------------------------------------------------------user------------------------
