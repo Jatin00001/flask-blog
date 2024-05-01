@@ -245,7 +245,7 @@ def logout():
 # ----------------------------------
 
 
-@app.route('/download')
+@app.route('/download_resume')
 def download_resume():
   resume_path = 'static/assets/resume_download/resume.pdf'  # Update with the actual path to your resume file
   return send_file(resume_path, as_attachment=True)
