@@ -1,8 +1,18 @@
 import sqlalchemy
 from sqlalchemy import create_engine, text
 import os
+from dotenv import load_dotenv
+import os
 
-my_secret = os.environ['DB_CONNECTION_STRING']
+# Load environment variables from .env file
+load_dotenv()
+if os.path.exists('.env'):
+  my_secret = os.getenv("DB_CONNECTION_STRING")
+  print("Found  file")
+else:
+  print("No .env file found")
+  my_secret = os.environ['DB_CONNECTION_STRING']
+  
 
 db_connection_string = my_secret
 # connect_args = {'ssl': {'cert': '/path/to/certificate.pem'}}
