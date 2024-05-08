@@ -5,14 +5,14 @@ from dotenv import load_dotenv
 import os
 
 # Load environment variables from .env file
-load_dotenv()
+
 if os.path.exists('.env'):
+  load_dotenv()
   my_secret = os.getenv("DB_CONNECTION_STRING")
   print("Found  file")
 else:
   print("No .env file found")
   my_secret = os.environ['DB_CONNECTION_STRING']
-  
 
 db_connection_string = my_secret
 # connect_args = {'ssl': {'cert': '/path/to/certificate.pem'}}
@@ -33,9 +33,6 @@ def loadformdbskills():
 
   except Exception as e:
     print(e)
-
-
-
 
 
 def load_form_db_skills(id):
