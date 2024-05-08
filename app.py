@@ -258,6 +258,11 @@ def download_resume():
 def about():
   return render_template('/about/about.html')
 
+# ---------------------------projects-----------------------
+@app.route('/projects')
+def projects():
+  return render_template('/projects/projects.html')
+
 
 # -------AFTER THIS SECTION ALL API WITH RAW DATA ------------------------------------------------------------------------
 @app.route('/api/skills')
