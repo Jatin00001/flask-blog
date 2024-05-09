@@ -10,6 +10,7 @@ module.exports = {
     "./static/js/**/*.js",
     "./templates/About/about.html",
     "*",
+    "./templates/projects/**/*.html",
   ],
   theme: {
     extend: {

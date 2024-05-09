@@ -1,1 +1,10 @@
-projects
+{% extends "base.html" %}
+
+
+{% block projects_main %}
+
+<section>
+    {% include "/projects/project_image.html" %}
+</section>
+{% include "/projects/project_templates.html" %}
+{% endblock %}
