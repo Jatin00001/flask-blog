@@ -252,7 +252,13 @@ def download_resume():
 
 
 # ---------------------------------------------------------user------------------------
+# -----------------contact---
+@app.route('/contact')
+def contact():
+  return render_template('/contact/contact.html')
 
+
+# ------------------------------------
 
 @app.route('/about')
 def about():
