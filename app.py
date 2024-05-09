@@ -280,6 +280,25 @@ def get_skill(id):
   else:
     return jsonify({"error": "Skill not found"}), 404
 
+@app.route('/api/unsplash')
+def unsplash():
+    import requests
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    UNSPLASH_ACCESS_KEY = os.getenv("UNSPLASH_ACCESS_KEY")
+    print(UNSPLASH_ACCESS_KEY)
+    url = 'https://api.unsplash.com/photos/random'
+    headers = {'Authorization': f'Client-ID {UNSPLASH_ACCESS_KEY}'}
+    params = {'count': 10,"w":800,"h":720}  # Example: get 10 random photos
+    response = requests.get(url, headers=headers, params=params)
+    if response.status_code == 200:
+        photos = response.json()
+        # Pass the photos data to your template
+        # return render_template('index.html', photos=photos)
+        return jsonify(photos)
+    else:
+      return 'Error fetching photos from Unsplash'
 
 @app.route('/api/blogs/<id>')
 def get_blog_api(id):
