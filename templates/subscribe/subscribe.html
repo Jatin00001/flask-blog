@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Function to redirect after a certain number of seconds
+        function redirect(seconds) {
+            setTimeout(function() {
+                window.location.href = '/'; // Redirect to the main page
+            }, seconds * 1000); // Convert seconds to milliseconds
+        }
+
+        // Call the redirect function with the desired number of seconds
+        redirect({{ seconds }});
+    </script>
+</head>
+<body>
+    <h1>Redirecting to main page in {{ seconds }} seconds...</h1>
+</body>
+</html>
+
+

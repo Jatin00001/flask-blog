@@ -269,7 +269,14 @@ def about():
 def projects():
   return render_template('/projects/projects.html')
 
+# ---------------------------Subscribe----
+@app.route('/subscribe', methods=['GET', 'POST'])
+def subscribe():
+  if request.method == 'POST':
+    email = request.form['footer-email']
+    return render_template('/subscribe/subscribe.html', email=email ,seconds=2)
 
+# ---------------------------------
 # -------AFTER THIS SECTION ALL API WITH RAW DATA ------------------------------------------------------------------------
 @app.route('/api/skills')
 def skills():
