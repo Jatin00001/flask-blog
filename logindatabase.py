@@ -28,6 +28,8 @@ def loadformdbskills():
       for row in result.all():
         skills.append(row._asdict())  #convert data into dictionary
       # print(skills)
+      if skills is None:
+          skills = "no skills database error"
       return skills
       # print(type(jobs))
 
@@ -45,7 +47,7 @@ def load_form_db_skills(id):
       if row:  # len(rows) gives a len of row
         return row._asdict()  # Convert row to dictionary using ._asdict()
       else:
-        return None
+        return "database error"
   except Exception as e:
     print("An error occurred:", e)
     return None
