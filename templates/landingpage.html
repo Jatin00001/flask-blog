@@ -1,691 +1,215 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
 
 <!-- ---------------------------------------------login btn------------------------- -->
-
 {% block loginactiveness %}
-<!-- Other content -->
+  {% if login %}
+    <!-- Show logout button if the user is logged in -->
+    <a href="/logout">Logout</a>
+  {% else %}
+    <!-- Show login button if the user is not logged in -->
+    <a href="/login">Login</a>
+  {% endif %}
+{% endblock %}
 
-<!-- Conditional login visibility -->
-{% if login %}
-<!-- Show logout button if the user is logged in -->
-<a href="/logout"
-  >Logout {% else %}
-  <!-- Show login button if the user is not logged in -->
-  <a href="/login">Login</a>
-  {% endif %}{% endblock %}
-
-  <!-- ---------------------------------------------content---- -->
-  {% block content %}
-
-  <!-- hero section -->
-  <section class="text-gray-600 body-font">
-    <div
-      class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
-    >
-      <div
-        class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center"
-      >
-        <h1
-          class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
-        >
-          Welcome to Jatin's Software
-          <br class="hidden lg:inline-block" />
-          Development Hub.
-        </h1>
-        <p class="mb-8 leading-relaxed">
-          Hello and welcome! I'm Jatin, a passionate software developer with a
-          knack for crafting innovative solutions using Python and Java. With a
-          blend of creativity and technical expertise, I specialize in building
-          robust software applications, designing captivating websites, and
-          creating bespoke WordPress themes.
-        </p>
-        <div class="flex justify-center">
-          <a href="/download_resume"
-            ><button
-              class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-            >
-              Resume
-            </button></a
-          >
-          <button
-            class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg"
-          >
-            Projects
+<!-- ---------------------------------------------content---- -->
+{% block content %}
+<section class="text-gray-600 body-font">
+  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+    <!-- Text Content -->
+    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+        Welcome to Jatin's Software<br class="hidden lg:inline-block" />
+        Development Hub.
+      </h1>
+      <p class="mb-8 leading-relaxed">
+        Hello and welcome! I'm Jatin, a passionate software developer with a knack for crafting 
+        innovative solutions using Python and Java. With a blend of creativity and technical 
+        expertise, I specialize in building robust software applications, designing captivating 
+        websites, and creating bespoke WordPress themes.
+      </p>
+      <div class="flex justify-center">
+        <a href="/download_resume">
+          <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+            Resume
           </button>
-        </div>
-      </div>
-      <!-- <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"> -->
-      <div class="w-fit lg:max-w-lg lg:w-full md:w-1/2">
-        <img
-          class="object-cover object-center rounded"
-          alt="hero"
-          src="{{ url_for('static', filename='assets/img/firstlogo.jpg') }}"
-        />
+        </a>
+        <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">
+          Projects
+        </button>
       </div>
     </div>
-  </section>
-  <!-- end hero section -->
-  {% endblock %}
 
-  <!-- -----------addding heading----------------------------------------------------------------------------------------------- -->
-  {% block heading1 %}
-  <div class="container px-5 mx-auto">
-    <div class="flex flex-col text-center w-full mb-20">
-      <h2
-        class="text-xs text-red-500 tracking-widest font-medium title-font mb-1"
-      >
-        Skills
-      </h2>
-      <h1
-        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-      >
-        I am Jatin.
-      </h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-        As a skilled professional, I bring a diverse range of expertise to the
-        table. Here are some key highlights of my skills:
-      </p>
+    <!-- Image -->
+    <div class="w-fit lg:max-w-lg lg:w-full md:w-1/2">
+      <img
+        class="object-cover object-center rounded"
+        alt="hero"
+        src="{{ url_for('static', filename='assets/img/firstlogo.jpg') }}"
+      />
     </div>
   </div>
-  {% endblock %}
-  <!-- -------------END HEADING--------------------------------------------------------------------------------------------- -->
+</section>
+{% endblock %}
 
-  <!-- --------------adding skills tags steps-------------------------------------------------------------------------------------------- -->
-  {% block section %}
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 pb-10 mx-auto flex flex-wrap">
-      <div class="flex flex-wrap w-full">
-        <div class="lg:w-2/5 md:w-1/2 md:pr-10 md:py-6">
-          {% for skills in skills %}
-          <div class="flex relative pb-12">
-            <div
-              class="h-full w-10 absolute inset-0 flex items-center justify-center"
-            >
-              <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-            </div>
-            <div
-              class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10"
-            >
-              <svg
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-            </div>
-            <div class="flex-grow pl-4">
-              <h2
-                class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider"
-              >
-                STEP {{skills['id']}}
-              </h2>
-              <p class="leading-relaxed">{{skills['name']}}</p>
-              <p class="leading-relaxed">{{skills['description']}}</p>
-            </div>
-          </div>
-          {% endfor %}
-          <!-- <div class="flex relative pb-12">
-          <div
-            class="h-full w-10 absolute inset-0 flex items-center justify-center"
-          >
-            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-          </div>
-          <div
-            class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10"
-          >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
-          </div>
-          <div class="flex-grow pl-4">
-            <h2
-              class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider"
-            >
-              STEP 2
-            </h2>
-            <p class="leading-relaxed">
-              Vice migas literally kitsch +1 pok pok. Truffaut hot chicken
-              slow-carb health goth, vape typewriter.
-            </p>
-          </div>
-        </div>
-        <div class="flex relative pb-12">
-          <div
-            class="h-full w-10 absolute inset-0 flex items-center justify-center"
-          >
-            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-          </div>
-          <div
-            class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10"
-          >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <circle cx="12" cy="5" r="3"></circle>
-              <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
-            </svg>
-          </div>
-          <div class="flex-grow pl-4">
-            <h2
-              class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider"
-            >
-              STEP 3
-            </h2>
-            <p class="leading-relaxed">
-              Coloring book nar whal glossier master cleanse umami. Salvia +1
-              master cleanse blog taiyaki.
-            </p>
-          </div>
-        </div>
-        <div class="flex relative pb-12">
-          <div
-            class="h-full w-10 absolute inset-0 flex items-center justify-center"
-          >
-            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
-          </div>
-          <div
-            class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10"
-          >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </div>
-          <div class="flex-grow pl-4">
-            <h2
-              class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider"
-            >
-              STEP 4
-            </h2>
-            <p class="leading-relaxed">
-              VHS cornhole pop-up, try-hard 8-bit iceland helvetica. Kinfolk
-              bespoke try-hard cliche palo santo offal.
-            </p>
-          </div>
-        </div>
-        <div class="flex relative">
-          <div
-            class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10"
-          >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
-            >
-              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
-              <path d="M22 4L12 14.01l-3-3"></path>
-            </svg>
-          </div>
-          <div class="flex-grow pl-4">
-            <h2
-              class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider"
-            >
-              FINISH
-            </h2>
-            <p class="leading-relaxed">
-              Pitchfork ugh tattooed scenester echo park gastropub whatever
-              cold-pressed retro.
-            </p>
-          </div>
-        </div> -->
-        </div>
-        <img
-          class="lg:w-3/5 md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12 shadow-md"
-          src="{{ url_for('static', filename='assets/img/tiny.jpg') }}"
-          alt="step"
-          height="10"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- --------------ADDING CONTENT FOR PROJECTS-------------------------------------------------------------------------------------------- -->
-  <!-- <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-col text-center w-full mb-20">
-      <h2
-        class="text-xs text-red-500 tracking-widest font-medium title-font mb-1"
-      >
-        ROOF PARTY POLAROID
-      </h2>
-      <h1
-        class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-      >
-        Master Cleanse Reliac Heirloom
-      </h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-        Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-        gentrify, subway tile poke farm-to-table. Franzen you probably haven't
-        heard of them man bun deep jianbing selfies heirloom prism food truck
-        ugh squid celiac humblebrag.
-      </p>
-    </div>
-    <div class="flex flex-wrap">
-      <div
-        class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60"
-      >
-        <h2
-          class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2"
-        >
-          Shooting Stars
-        </h2>
-        <p class="leading-relaxed text-base mb-4">
-          Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-          hexagon disrupt edison bulbche.
-        </p>
-        <a class="text-red-500 inline-flex items-center"
-          >Learn More
-          <svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-      <div
-        class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60"
-      >
-        <h2
-          class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2"
-        >
-          The Catalyzer
-        </h2>
-        <p class="leading-relaxed text-base mb-4">
-          Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-          hexagon disrupt edison bulbche.
-        </p>
-        <a class="text-red-500 inline-flex items-center"
-          >Learn More
-          <svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-      <div
-        class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60"
-      >
-        <h2
-          class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2"
-        >
-          Neptune
-        </h2>
-        <p class="leading-relaxed text-base mb-4">
-          Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-          hexagon disrupt edison bulbche.
-        </p>
-        <a class="text-red-500 inline-flex items-center"
-          >Learn More
-          <svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-      <div
-        class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6 border-l-2 border-gray-200 border-opacity-60"
-      >
-        <h2
-          class="text-lg sm:text-xl text-gray-900 font-medium title-font mb-2"
-        >
-          Melanchole
-        </h2>
-        <p class="leading-relaxed text-base mb-4">
-          Fingerstache flexitarian street art 8-bit waistcoat. Distillery
-          hexagon disrupt edison bulbche.
-        </p>
-        <a class="text-red-500 inline-flex items-center"
-          >Learn More
-          <svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            class="w-4 h-4 ml-2"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
-    </div>
-    <button
-      class="flex mx-auto mt-16 text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
-    >
-      Button
-    </button>
-  </div>
-</section> -->
-  <!-- -------------------------END CONTENT FOR PROJECT--------------------------------------------------------------------------------- -->
-
-  <!-- -----------------------------------UNDER TESTING----------------------------------------------------------------------- -->
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 py-24 mx-auto">
-      <div
-        class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto"
-      >
-        <h1
-          class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900"
-        >
-          "During testing, this website and some pages may be temporarily
-          unavailable as we are actively working on improvements. We apologize
-          for any inconvenience this may cause and appreciate your patience.
-          Thank you for visiting.
-        </h1>
-        <!-- <button
-        class="flex-shrink-0 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-10 sm:mt-0"
-      >
-        Button
-      </button> -->
-      </div>
-    </div>
-  </section>
-
-  <!-- --------------------------------------------------------------------------------------------------------- -->
-
-  <!-- -----------------------BLOGS----------------------------------------------------------------------------------- -->
-  <div class="container px-5 pt-5 mx-auto">
-    <h1
-      class="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900"
-    >
-      <!-- <a href="/all_blogs">BLOGS</a> -->
-      <ul class="flex justify-center mt-12 space-x-3">
-        <li class="hidden"></li>
-        <li>
-          <a
-            class="flex items-center px-5 py-2.5 space-x-3 text-sm font-medium text-black transition-colors duration-300 transform bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:text-white hover:bg-gray-700 rounded-md focus:outline-none"
-            href="/all_blogs"
-          >
-            Blogs More »
-          </a>
-        </li>
-      </ul>
-      <!-- <br class="hidden sm:block"> -->
+<!-- -----------HEADING----------------------------------------------------------------------------------------------- -->
+{% block heading1 %}
+<div class="container px-5 mx-auto">
+  <div class="flex flex-col text-center w-full mb-20">
+    <h2 class="text-xs text-red-500 tracking-widest font-medium title-font mb-1">
+      {{ section_title or 'Skills' }}
+    </h2>
+    <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+      I am {{ user_name or 'Jatin' }}.
     </h1>
+    {% if description %}
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+        {{ description }}
+      </p>
+    {% else %}
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500 italic">
+        No skill description provided yet.
+      </p>
+    {% endif %}
   </div>
+</div>
+{% endblock %}
 
-  <section class="text-gray-600 body-font overflow-hidden bg-slate-200">
-    <div class="container px-5 py-24 mx-auto">
-      <div class="flex flex-wrap -m-12">
-        {% for blogs in blogs[:2] %}
-        <!-- i am harcoded for only 2 post fetch -->
-        <div class="p-12 md:w-1/2 flex flex-col items-start">
-          <span
-            class="inline-block py-1 px-2 rounded bg-red-50 text-red-500 text-xs font-medium tracking-widest"
-            >{{blogs['title']}}</span
-          >
-          <h2
-            class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4"
-          >
-            {{blogs['subhead']}}
-          </h2>
-          <p class="leading-relaxed mb-8">{{blogs['content'][:400]}}...</p>
-          <div
-            class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
-          >
-            <a
-              class="text-red-500 inline-flex items-center"
-              href="{{url_for('get_blog', id=blogs['blog_id'])}}"
-              >Read More
-              <svg
-                class="w-4 h-4 ml-2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M5 12h14"></path>
-                <path d="M12 5l7 7-7 7"></path>
-              </svg>
-            </a>
-            <span
-              class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
-            >
-              <svg
-                class="w-4 h-4 mr-1"
-                stroke="currentColor"
-                stroke-width="2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle></svg
-              >1.2K
-            </span>
-            <span
-              class="text-gray-400 inline-flex items-center leading-none text-sm"
-            >
-              <svg
-                class="w-4 h-4 mr-1"
-                stroke="currentColor"
-                stroke-width="2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-                ></path></svg
-              >6
-            </span>
+<!-- --------------SKILLS STEPS-------------------------------------------------------------------------------------------- -->
+{% block section %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 pb-10 mx-auto flex flex-wrap">
+    <div class="flex flex-wrap w-full">
+      <div class="lg:w-2/5 md:w-1/2 md:pr-10 md:py-6">
+        {% for skills in skills %}
+        <div class="flex relative pb-12">
+          <div class="h-full w-10 absolute inset-0 flex items-center justify-center">
+            <div class="h-full w-1 bg-gray-200 pointer-events-none"></div>
           </div>
-          <a class="inline-flex items-center">
-            <img
-              alt="blog"
-              src="https://dummyimage.com/104x104"
-              class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-            />
-            <span class="flex-grow flex flex-col pl-4">
-              <span class="title-font font-medium text-gray-900"
-                >{{blogs['postby']}}</span
-              >
-              <span class="text-gray-400 text-xs tracking-widest mt-0.5"
-                >{{blogs['created_at']}}</span
-              >
-            </span>
-          </a>
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500 inline-flex items-center justify-center text-white relative z-10">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              class="w-5 h-5" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="flex-grow pl-4">
+            <h2 class="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">STEP {{ skills['id'] }}</h2>
+            <p class="leading-relaxed">{{ skills['name'] }}</p>
+            <p class="leading-relaxed">{{ skills['description'] }}</p>
+          </div>
         </div>
         {% endfor %}
-        <!-- <div class="p-12 md:w-1/2 flex flex-col items-start">
-        <span
-          class="inline-block py-1 px-2 rounded bg-red-50 text-red-500 text-xs font-medium tracking-widest"
-          >CATEGORY</span
-        >
-        <h2
-          class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4"
-        >
-          Pinterest DIY dreamcatcher gentrify single-origin coffee
+      </div>
+      <img class="lg:w-3/5 md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12 shadow-md"
+        src="{{ url_for('static', filename='assets/img/tiny.jpg') }}" alt="step" height="10" />
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<!-- ------------------TESTING NOTICE----------------------------------------------------------------------- -->
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-2/3 flex flex-col sm:flex-row sm:items-center items-start mx-auto">
+      <h1 class="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900">
+        "During testing, this website and some pages may be temporarily unavailable as we are actively working on improvements. We appreciate your patience. Thank you for visiting."
+      </h1>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------BLOGS----------------------------------------------------------------------- -->
+<div class="container px-5 pt-5 mx-auto">
+  <h1 class="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900">
+    <ul class="flex justify-center mt-12 space-x-3">
+      <li class="hidden"></li>
+      <li>
+        <a class="flex items-center px-5 py-2.5 space-x-3 text-sm font-medium text-black transition-colors duration-300 transform bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:text-white hover:bg-gray-700 rounded-md focus:outline-none"
+          href="/all_blogs">
+          Blogs More »
+        </a>
+      </li>
+    </ul>
+  </h1>
+</div>
+
+<section class="text-gray-600 body-font overflow-hidden bg-slate-200">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap -m-12">
+      {% for blogs in blogs[:2] %}
+      <div class="p-12 md:w-1/2 flex flex-col items-start">
+        <span class="inline-block py-1 px-2 rounded bg-red-50 text-red-500 text-xs font-medium tracking-widest">
+          {{ blogs['title'] }}
+        </span>
+        <h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
+          {{ blogs['subhead'] }}
         </h2>
-        <p class="leading-relaxed mb-8">
-          Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal
-          portland. VHS man braid palo santo hoodie brunch trust fund. Bitters
-          hashtag waistcoat fashion axe chia unicorn. Plaid fixie chambray 90's,
-          slow-carb etsy tumeric.
-        </p>
-        <div
-          class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
-        >
-          <a class="text-red-500 inline-flex items-center"
-            >Learn More
-            <svg
-              class="w-4 h-4 ml-2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+        <p class="leading-relaxed mb-8">{{ blogs['content'][:400] }}...</p>
+        <div class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">
+          <a class="text-red-500 inline-flex items-center" href="{{ url_for('get_blog', id=blogs['blog_id']) }}">
+            Read More
+            <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path>
               <path d="M12 5l7 7-7 7"></path>
             </svg>
           </a>
-          <span
-            class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
-          >
-            <svg
-              class="w-4 h-4 mr-1"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              viewBox="0 0 24 24"
-            >
+          <span class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
+            <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" viewBox="0 0 24 24">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle></svg
-            >1.2K
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>1.2K
           </span>
-          <span
-            class="text-gray-400 inline-flex items-center leading-none text-sm"
-          >
-            <svg
-              class="w-4 h-4 mr-1"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              viewBox="0 0 24 24"
-            >
+          <span class="text-gray-400 inline-flex items-center leading-none text-sm">
+            <svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+              stroke-linejoin="round" viewBox="0 0 24 24">
               <path
-                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-              ></path></svg
-            >6
+                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z">
+              </path>
+            </svg>6
           </span>
         </div>
         <a class="inline-flex items-center">
-          <img
-            alt="blog"
-            src="https://dummyimage.com/103x103"
-            class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-          />
+          <img alt="blog" src="https://dummyimage.com/104x104"
+            class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center" />
           <span class="flex-grow flex flex-col pl-4">
-            <span class="title-font font-medium text-gray-900">Alper Kamu</span>
-            <span class="text-gray-400 text-xs tracking-widest mt-0.5"
-              >DESIGNER</span
-            >
+            <span class="title-font font-medium text-gray-900">{{ blogs['postby'] }}</span>
+            <span class="text-gray-400 text-xs tracking-widest mt-0.5">{{ blogs['created_at'] }}</span>
           </span>
         </a>
-      </div> -->
       </div>
+      {% endfor %}
     </div>
-  </section>
-  <!-- -------------------------END bLOGS--------------------------------------------------------------------------------- -->
+  </div>
+</section>
 
-  {% endblock %}
-
-  <!-- -----------------------landingcontact----------------------------------------------------------------------------------- -->
-
-  {% block landingcontact %}
-  <section class="text-gray-600 body-font">
-    <div class="container px-5 py-24 mx-auto">
-      <div class="flex flex-col text-center w-full mb-12">
-        <h1
-          class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900"
-        >
-          Contact Me
-        </h1>
-        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-          Thank you for taking the time to explore my portfolio. If you have any
-          inquiries, opportunities, or collaborations you'd like to discuss,
-          please don't hesitate to reach out to me. I'm always open to
-          connecting with fellow professionals, recruiters, potential clients,
-          and anyone interested in my work.
-        </p>
-      </div>
-      <div
-        class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end"
-      >
-        <div class="relative flex-grow w-full">
-          <label for="full-name" class="leading-7 text-sm text-gray-600"
-            >Full Name</label
-          >
-          <input
-            type="text"
-            id="full-name"
-            name="full-name"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          />
-        </div>
-        <div class="relative flex-grow w-full">
-          <label for="message" class="leading-7 text-sm text-gray-600"
-            >message</label
-          >
-          <input
-            type="text"
-            id="message"
-            name="message"
-            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-          />
-        </div>
-        <a
-          href="#"
-          onclick="sendMail()"
-          class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg"
-          >Send</a
-        >
-      </div>
+<!-- -------------------------CONTACT--------------------------------------------------------------------------------- -->
+{% block landingcontact %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-12">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Me</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
+        Thank you for taking the time to explore my portfolio. If you have any inquiries, opportunities,
+        or collaborations you'd like to discuss, please don't hesitate to reach out to me.
+      </p>
     </div>
-  </section>
-  {% endblock %}
-
-  <!-- -------------------------END landingcontact--------------------------------------------------------------------------------- -->
-</a>
+    <div
+      class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+      <div class="relative flex-grow w-full">
+        <label for="full-name" class="leading-7 text-sm text-gray-600">Full Name</label>
+        <input type="text" id="full-name" name="full-name"
+          class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+      </div>
+      <div class="relative flex-grow w-full">
+        <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+        <input type="text" id="message" name="message"
+          class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-red-500 focus:bg-transparent focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+      </div>
+      <a href="#" onclick="sendMail()"
+        class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">Send</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

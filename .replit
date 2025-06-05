@@ -3,6 +3,7 @@ run = "python app.py"
 
 [nix]
 channel = "stable-23_05"
+packages = ["cargo", "libiconv", "rustc"]
 
 [unitTest]
 language = "python3"

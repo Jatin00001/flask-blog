@@ -14,8 +14,8 @@ app.secret_key = 'sdsdsdasdsdsdscsasxsxsaxwhbdbwejbdijwendiwuhiiiuduiweduiweduih
 
 @app.route('/')
 def index():
-  skill = loadformdbskills()
-  blogs = fetchallblogs()
+  skill = loadformdbskills() or []
+  blogs = fetchallblogs() or [] 
   if 'email' in session:
     current_user = session['email']
     return render_template('landingpage.html',
